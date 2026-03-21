@@ -2,6 +2,8 @@
 
 日々の作業時間をシンプルに記録できるタイムカードアプリです。
 
+![Devotime dashboard](docs/images/devotime-dashboard.png)
+
 ## Docker でまとめて起動
 
 1. `.env.example` を `.env` にコピーします
