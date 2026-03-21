@@ -5,6 +5,12 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { normalizeName, verifyPassword } from "@/lib/password";
 import { prisma } from "@/lib/prisma";
 
+const authSecret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+
+if (process.env.NODE_ENV === "production" && !authSecret) {
+  throw new Error("AUTH_SECRET or NEXTAUTH_SECRET must be set in production.");
+}
+
 const credentialsProvider = CredentialsProvider({
   name: "credentials",
   credentials: {
@@ -49,7 +55,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET ?? "devotime-local-nextauth-secret-change-me",
+  secret: authSecret ?? "devotime-local-nextauth-secret-change-me",
   pages: {
     signIn: "/",
   },

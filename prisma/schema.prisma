@@ -3,27 +3,28 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String?
-  username       String    @unique
-  normalizedName String    @unique
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  passwordHash   String
-  passwordSalt   String
-  outerBackgroundColor String @default("#2f7b8b")
-  innerBackgroundColor String @default("#08131f")
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  accounts       Account[]
-  sessions       Session[]
-  workRecords    WorkRecord[]
+  id                   String       @id @default(cuid())
+  name                 String?
+  username             String       @unique
+  normalizedName       String       @unique
+  email                String?      @unique
+  emailVerified        DateTime?
+  image                String?
+  passwordHash         String
+  passwordSalt         String
+  outerBackgroundColor String       @default("#2f7b8b")
+  innerBackgroundColor String       @default("#08131f")
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  accounts             Account[]
+  sessions             Session[]
+  workRecords          WorkRecord[]
 }
 
 model Account {

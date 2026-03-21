@@ -1,6 +1,6 @@
 # Devotime
 
-研究室の作業時間をシンプルに記録できるタイムカードアプリです。
+日々の作業時間をシンプルに記録できるタイムカードアプリです。
 
 ## Docker でまとめて起動
 
@@ -32,3 +32,21 @@ docker compose up -d postgres
 npm install
 npm run dev
 ```
+
+## 本番デプロイのメモ
+
+本番では `Vercel + Supabase(Postgres)` の構成を想定しています。
+
+- Vercel では `npm run build` 時に `prisma generate` が自動で走ります
+- Prisma のマイグレーションは自動実行せず、`npm run prisma:migrate:deploy` を明示的に実行してください
+- `DATABASE_URL` はアプリ実行用の pooled 接続、`DIRECT_URL` は Prisma CLI 用の direct 接続に分ける想定です
+- Vercel Functions のリージョンは Supabase と近い場所に合わせてください。日本向けなら Tokyo 近辺を推奨します
+
+### Vercel に設定する環境変数
+
+- `DATABASE_URL`
+- `DIRECT_URL`
+- `NEXTAUTH_SECRET`
+- `NEXTAUTH_URL`
+
+`NEXTAUTH_URL` は本番ドメインを設定してください。Vercel の System Environment Variables を有効にしている場合は自動解決もできますが、固定で入れておくとわかりやすいです。
