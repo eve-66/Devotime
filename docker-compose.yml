@@ -1,0 +1,45 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://devotime:devotime@postgres:5432/devotime?schema=public
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    command: ["sh", "/app/docker/web-entrypoint.sh"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - devotime-node-modules:/app/node_modules
+      - devotime-next-cache:/app/.next
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: devotime
+      POSTGRES_USER: devotime
+      POSTGRES_PASSWORD: devotime
+    ports:
+      - "5433:5432"
+    volumes:
+      - devotime-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devotime -d devotime"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  devotime-node-modules:
+  devotime-next-cache:
+  devotime-postgres-data:
