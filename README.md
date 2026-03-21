@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Devotime
 
-## Getting Started
+研究室の作業時間をシンプルに記録できるタイムカードアプリです。
 
-First, run the development server:
+## Docker でまとめて起動
+
+1. `.env.example` を `.env` にコピーします
+2. 必要なら `NEXTAUTH_SECRET` をローカル用の値に変更します
+3. `docker compose up` を実行します
+4. [http://localhost:3000](http://localhost:3000) を開きます
+
+`web` コンテナは起動時に以下を自動で行います。
+
+- Prisma Client の生成
+- `prisma migrate deploy`
+- Next.js 開発サーバーの起動
+
+以降はソースコードの変更が bind mount 経由で反映されます。依存関係や Dockerfile を変更したときだけ `docker compose up --build` を再実行してください。
+
+完全に作り直したいときは次を実行します。
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose down -v
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ローカルで web だけ動かす
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+DB だけ Docker で起動し、web はホストで実行することもできます。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+docker compose up -d postgres
+npm install
+npm run dev
+```
