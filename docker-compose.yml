@@ -11,6 +11,7 @@ services:
       - .env
     environment:
       DATABASE_URL: postgresql://devotime:devotime@postgres:5432/devotime?schema=public
+      DIRECT_URL: postgresql://devotime:devotime@postgres:5432/devotime?schema=public
       NODE_ENV: development
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
