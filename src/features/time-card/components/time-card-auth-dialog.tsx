@@ -1,14 +1,8 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useTimeCardApp } from "@/features/time-card/context/time-card-app-context";
 
-import { useTimeCardApp } from "@/components/time-card-app-context";
-
-type TimeCardAuthDialogInteractiveProps = {
-  intro: ReactNode;
-};
-
-export function TimeCardAuthDialogInteractive({ intro }: TimeCardAuthDialogInteractiveProps) {
+export function TimeCardAuthDialog() {
   const {
     showAuthPanel,
     closeAuthPanel,
@@ -37,7 +31,15 @@ export function TimeCardAuthDialogInteractive({ intro }: TimeCardAuthDialogInter
         onClick={(event) => event.stopPropagation()}
       >
         <div className="auth-dialog-head">
-          {intro}
+          <div>
+            <span className="eyebrow">Save Your Logs</span>
+            <h2 className="dialog-title" id="auth-dialog-title">
+              アカウント保存
+            </h2>
+            <p className="dialog-copy">
+              ログインすると、このブラウザを閉じても打刻履歴を残せます。
+            </p>
+          </div>
 
           <button
             aria-label="ログインパネルを閉じる"

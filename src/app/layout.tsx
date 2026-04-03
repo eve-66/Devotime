@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Devotime",
-  description: "作業時間をシンプルに記録できるタイムカードアプリ",
+  description: "A simple time card app to help you focus and track your work hours. Devote your time and boost your productivity with Devotime.",
 };
 
 export default function RootLayout({

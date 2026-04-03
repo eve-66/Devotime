@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import { TimeCardApp } from "@/components/time-card-app";
+import { TimeCardScreen } from "@/features/time-card/components/time-card-screen";
 import { authOptions } from "@/lib/auth";
 import { getAccountSnapshotForUser, toSessionUser } from "@/lib/time-card-data";
 import { getDefaultThemePreferences } from "@/lib/theme";
@@ -22,7 +22,7 @@ export default async function Home() {
   }
 
   return (
-    <TimeCardApp
+    <TimeCardScreen
       initialAccountRecords={initialAccountRecords}
       initialAccountTheme={initialAccountTheme}
       initialSession={initialSession}

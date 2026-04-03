@@ -1,9 +1,9 @@
 "use client";
 
-import { useTimeCardApp } from "@/components/time-card-app-context";
+import { useTimeCardApp } from "@/features/time-card/context/time-card-app-context";
 import { formatClock, formatDuration, formatHeroDate } from "@/lib/time";
 
-export function TimeCardFocusStageInteractive() {
+export function TimeCardFocusStage() {
   const {
     now,
     statusLabel,
